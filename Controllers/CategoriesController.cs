@@ -20,7 +20,8 @@ namespace APICatalogo.Controllers
         [HttpGet("products")]
         public ActionResult<IEnumerable<Category>> GetCategoriesProducts()
         {
-            return _context.Categories.Include(product => product.Products).ToList();
+            return _context.Categories.Include(product => product.Products)
+                .Where(category => category.CategoryId <= 5).ToList();
         }
 
         // buscando todas as categorias
