@@ -1,6 +1,7 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers
 {
@@ -15,7 +16,7 @@ namespace APICatalogo.Controllers
             _context = context;
         }
 
-        // metodo get para buscar os dados no banco
+        // método get para buscar os dados no banco
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()
         {
@@ -28,7 +29,7 @@ namespace APICatalogo.Controllers
         }
 
         // fazendo a busca somente de um producto
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "GetProduct")]
         public ActionResult<Product> Get(int id)
         {
             var product = _context.Products.FirstOrDefault(prod => prod.ProductId == id);
@@ -38,6 +39,36 @@ namespace APICatalogo.Controllers
             }
 
             return product;
+        }
+
+        // método para criação de um produto
+        [HttpPost]
+        public ActionResult Post(Product product)
+        {
+            if(product is null)
+            {
+                return BadRequest();
+            }
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("GetProduct",
+                new { id = product.ProductId }, product);
+        }
+
+        // método para atualização do produto
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Product product)
+        {
+            if(id != product.ProductId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(product);
         }
     }
 }
