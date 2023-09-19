@@ -20,57 +20,97 @@ namespace APICatalogo.Controllers
         [HttpGet("products")]
         public ActionResult<IEnumerable<Category>> GetCategoriesProducts()
         {
-            return _context.Categories.Include(product => product.Products)
-                .Where(category => category.CategoryId <= 5).ToList();
+            try
+            {
+                return _context.Categories.Include(product => product.Products)
+               .Where(category => category.CategoryId <= 5).ToList();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
         // buscando todas as categorias
         [HttpGet]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            return _context.Categories.ToList();
+            try
+            {
+                return _context.Categories.AsNoTracking().ToList();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
         // buscando todas as categorias por id
         [HttpGet("{id:int}", Name = "GetCategory")]
         public ActionResult<Category> Get(int id)
         {
-            var category = _context.Categories.FirstOrDefault(category => category.CategoryId == id);
-            if (category is null)
+            try
             {
-                return NotFound("Category not found!");
+                var category = _context.Categories.FirstOrDefault(category => category.CategoryId == id);
+                if (category is null)
+                {
+                    return NotFound($"Category {id} not found!");
+                }
+                return Ok(category);
             }
-            return Ok(category);
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
         // cadastrar uma categoria
         [HttpPost]
         public ActionResult Post(Category category)
         {
-            if (category is null)
+            try
             {
-                return BadRequest();
-            }
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+                if (category is null)
+                {
+                    return BadRequest("Category cannot be null");
+                }
+                _context.Categories.Add(category);
+                _context.SaveChanges();
 
-            return new CreatedAtRouteResult("GetCategory",
-                new { id = category.CategoryId }, category);
+                return new CreatedAtRouteResult("GetCategory",
+                    new { id = category.CategoryId }, category);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
         // atualizar categoria
         [HttpPut("{id:int}")]
         public ActionResult<Category> Put(int id, Category category)
         {
-            if(id != category.CategoryId)
+            try
             {
-                return BadRequest();
+                if (id != category.CategoryId)
+                {
+                    return BadRequest($"Category {id} not exists");
+                }
+
+                _context.Entry(category).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return Ok(category);
             }
-
-            _context.Entry(category).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return Ok(category);
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
 
@@ -78,14 +118,22 @@ namespace APICatalogo.Controllers
         [HttpDelete("{id:int}")]
         public ActionResult<Category> Delete(int id)
         {
-            var category = _context.Categories.FirstOrDefault(category => category.CategoryId == id);
-            if(category is null)
+            try
             {
-                return NotFound("Category not Found!");
+                var category = _context.Categories.FirstOrDefault(category => category.CategoryId == id);
+                if (category is null)
+                {
+                    return NotFound("Category not Found!");
+                }
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+                return Ok(category);
             }
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
-            return Ok(category);
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error ocurred while processing your request");
+            }
         }
 
     }
