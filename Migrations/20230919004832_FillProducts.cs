@@ -10,7 +10,7 @@ namespace APICatalogo.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder mb)
         {
-            mb.Sql("insert into products (default, Name, Description, Price, ImageUrl, Stock, CreatedAt, CatergoryId)" +
+            mb.Sql("insert into product (Name, Description, Price, ImageUrl, Stock, CreatedAt, CatergoryId)" +
                 "values ('Coca-cola diet', 'Refrigerante de Coca 350ml', '5.45', 'cocacola.jpg', '10', now(), 1)");
         }
 

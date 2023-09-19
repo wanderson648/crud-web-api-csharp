@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\apicatalogo\\APICatalogo.csproj": {}
+    "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\apicatalogo\\APICatalogo.csproj": {
+    "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\apicatalogo\\APICatalogo.csproj",
+        "projectUniqueName": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
         "projectName": "APICatalogo",
-        "projectPath": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\apicatalogo\\APICatalogo.csproj",
+        "projectPath": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
         "packagesPath": "C:\\Users\\Wanderson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\apicatalogo\\obj\\",
+        "outputPath": "C:\\Users\\Wanderson\\Desktop\\api-demo\\APICatalogo\\APICatalogo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Wanderson\\AppData\\Roaming\\NuGet\\NuGet.Config",
